@@ -47,10 +47,10 @@ class FromValueVisitor(
         FileSpec.builder(packageName, "${className}FromValue")
             .addFileComment(
                 """
-                Generated FromValue for [%T]
+                Generated FromValue for [%L]
                 DO NOT EDIT MANUALLY
                 """.trimIndent(),
-                classDeclaration.toClassName()
+                classDeclaration.simpleName.asString(),
             )
             .addFunction(
                 makeFromValueFunction(
@@ -82,7 +82,6 @@ class FromValueVisitor(
             .addParameter("param", param.type.toTypeName())
             .beginControlFlow("return when (param)")
             .apply {
-
                 fields.forEach { field ->
                     val fieldClassName = field.toClassName()
 
