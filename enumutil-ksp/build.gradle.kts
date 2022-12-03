@@ -10,7 +10,7 @@ plugins {
 dependencies {
     api(kotlin("stdlib"))
     api(project(":enumutil"))
-    api("com.google.devtools.ksp:symbol-processing-api:1.7.21-1.0.8")
+    api("com.google.devtools.ksp:symbol-processing-api:1.7.22-1.0.8")
 
     val poetVersion = "1.12.0"
     implementation("com.squareup:kotlinpoet:$poetVersion")
@@ -42,9 +42,9 @@ publishing {
             }
 
             pom {
-                name.set("partial-kt")
-                description.set("A Kotlin KSP plugin for generating partial variants of classes.")
-                url.set("https://github.com/MateriiApps/partial-kt")
+                name.set("enumutil-kt")
+                description.set("A Kotlin KSP plugin for generating repetitive functions for enums.")
+                url.set("https://github.com/MateriiApps/enumutil-kt")
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
@@ -65,9 +65,9 @@ publishing {
                     }
                 }
                 scm {
-                    url.set("https://github.com/MateriiApps/partial-kt")
-                    connection.set("scm:git:github.com/MateriiApps/partial-kt.git")
-                    developerConnection.set("scm:git:ssh://github.com/MateriiApps/partial-kt.git")
+                    url.set("https://github.com/MateriiApps/enumutil-kt")
+                    connection.set("scm:git:github.com/MateriiApps/enumutil-kt.git")
+                    developerConnection.set("scm:git:ssh://github.com/MateriiApps/enumutil-kt.git")
                 }
             }
         }

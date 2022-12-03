@@ -1,26 +1,12 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
 }
 
-dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.4.1")
-}
-
 kotlin {
     explicitApi()
     jvmToolchain(11)
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = freeCompilerArgs +
-                "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
-    }
 }
 
 task<Jar>("javadocJar") {
@@ -38,9 +24,9 @@ publishing {
             }
 
             pom {
-                name.set("partial-kt")
-                description.set("A Kotlin KSP plugin for generating partial variants of classes.")
-                url.set("https://github.com/MateriiApps/partial-kt")
+                name.set("enumutil-kt")
+                description.set("A Kotlin KSP plugin for generating repetitive functions for enums.")
+                url.set("https://github.com/MateriiApps/enumutil-kt")
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
@@ -61,9 +47,9 @@ publishing {
                     }
                 }
                 scm {
-                    url.set("https://github.com/MateriiApps/partial-kt")
-                    connection.set("scm:git:github.com/MateriiApps/partial-kt.git")
-                    developerConnection.set("scm:git:ssh://github.com/MateriiApps/partial-kt.git")
+                    url.set("https://github.com/MateriiApps/enumutil-kt")
+                    connection.set("scm:git:github.com/MateriiApps/enumutil-kt.git")
+                    developerConnection.set("scm:git:ssh://github.com/MateriiApps/enumutil-kt.git")
                 }
             }
         }
