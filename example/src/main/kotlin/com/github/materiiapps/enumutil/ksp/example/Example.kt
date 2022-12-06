@@ -1,6 +1,6 @@
 package com.github.materiiapps.enumutil.ksp.example
 
-import com.github.materiiapps.enumutil.ksp.FromValue
+import com.github.materiiapps.enumutil.FromValue
 
 @FromValue
 enum class OpCodes(val code: Int) {

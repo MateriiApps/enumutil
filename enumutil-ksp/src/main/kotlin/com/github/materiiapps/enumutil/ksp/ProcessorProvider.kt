@@ -35,7 +35,7 @@ internal class ProcessorProvider : SymbolProcessorProvider {
         }
 
         companion object {
-            const val FROMVALUE_ANNOTATION = "com.github.materiiapps.enumutil.ksp.FromValue"
+            const val FROMVALUE_ANNOTATION = "com.github.materiiapps.enumutil.FromValue"
         }
     }
 }

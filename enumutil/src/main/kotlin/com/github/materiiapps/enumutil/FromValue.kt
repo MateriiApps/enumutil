@@ -1,4 +1,4 @@
-package com.github.materiiapps.enumutil.ksp
+package com.github.materiiapps.enumutil
 
 /**
  * Generate `fromValue(...)` extension methods for the target class.
