@@ -1,9 +1,9 @@
 pluginManagement {
     plugins {
+        kotlin("jvm") version "1.9.20" apply false
         id("maven-publish") apply false
-        kotlin("jvm") version "1.7.21" apply false
-        id("com.google.devtools.ksp") version "1.7.22-1.0.8" apply false
-        id("com.github.johnrengelman.shadow") version "7.1.2" apply false
+        id("com.google.devtools.ksp") version "1.9.20-1.0.14" apply false
+        id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     }
     repositories {
         gradlePluginPortal()
@@ -16,3 +16,4 @@ rootProject.name = "enumutil-kt"
 include("enumutil")
 include("enumutil-ksp")
 include("example")
+//include("benchmark")
