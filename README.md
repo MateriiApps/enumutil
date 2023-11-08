@@ -6,7 +6,7 @@ A Kotlin KSP plugin for generating repetitive functions for enums.
 
 ```kt
 plugins {
-    id("com.google.devtools.ksp") version "1.7.22-1.0.8"
+    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
 repositories {
@@ -14,8 +14,8 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.materiiapps:enumutil:1.0.0")
-    ksp("io.github.materiiapps:enumutil-ksp:1.0.0")
+    implementation("io.github.materiiapps:enumutil:1.1.0")
+    ksp("io.github.materiiapps:enumutil-ksp:1.1.0")
 }
 
 kotlin {
