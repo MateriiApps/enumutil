@@ -19,13 +19,42 @@ class FromValueVisitor(
 ) : KSVisitorVoid() {
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
         if (classDeclaration.classKind != ClassKind.ENUM_CLASS) {
-            logger.error("Cannot run FromValue on a non enum class!", classDeclaration)
+            logger.error("Cannot apply FromValue onto a non enum class!", classDeclaration)
             return
         }
 
-        val param = classDeclaration.primaryConstructor?.parameters?.singleOrNull() ?: run {
-            logger.error("Must have exactly one constructor parameter in order to run FromValue!", classDeclaration)
-            return
+        val annotation = classDeclaration.annotations
+            .find { it.shortName.asString() == "FromValue" } // I can't find a way to use qualified name, hopefully nobody else uses @FromValue
+            ?: throw IllegalStateException("annotation missing; lib broken")
+
+        val targetFieldName = annotation.arguments
+            .find { it.name?.getShortName() == "field" }
+            ?.value.let { it as String? }
+            ?: throw IllegalStateException("annotation missing field; lib broken")
+
+        // If it is the default, use first param
+        val targetParam = if (targetFieldName == "") {
+            val param = classDeclaration.primaryConstructor
+                ?.parameters?.getOrNull(0)
+
+            if (param == null) {
+                logger.error("Must have exactly one constructor parameter in order to run FromValue!", classDeclaration)
+                return
+            }
+
+            param
+        } else {
+            // Check target param exists
+            val param = classDeclaration.primaryConstructor
+                ?.parameters
+                ?.find { it.name?.getShortName() == targetFieldName }
+
+            if (param == null) {
+                logger.error("FromValue: target field does not exist in enum", classDeclaration)
+                return
+            }
+
+            param
         }
 
         val enumFields = classDeclaration.declarations
@@ -56,7 +85,7 @@ class FromValueVisitor(
                 makeFromValueFunction(
                     companion = companion,
                     parentClass = classDeclaration,
-                    param = param,
+                    param = targetParam,
                     fields = enumFields,
                 )
             )
@@ -86,7 +115,7 @@ class FromValueVisitor(
                     val fieldClassName = field.toClassName()
 
                     addStatement(
-                        "%T.`%L` -> %T",
+                        "%T.%N -> %T",
                         fieldClassName,
                         param.name!!.asString(),
                         fieldClassName,

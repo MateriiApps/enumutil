@@ -2,12 +2,12 @@ package com.github.materiiapps.enumutil.ksp.example
 
 import com.github.materiiapps.enumutil.FromValue
 
-@FromValue
-enum class OpCodes(val code: Int) {
-    READY(1),
-    DELETE(2),
-    CREATE(3),
-    DISCONNECT(4);
+@FromValue("code")
+enum class OpCodes(val code: Int, val display: String) {
+    READY(1, "Ready"),
+    DELETE(2, "Delete"),
+    CREATE(3, "Create"),
+    DISCONNECT(4, "Disconnect");
 
     companion object Serializer {
         // blah blah blah

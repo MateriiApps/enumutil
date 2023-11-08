@@ -2,7 +2,7 @@ package com.github.materiiapps.enumutil
 
 /**
  * Generate `fromValue(...)` extension methods for the target class.
- * This matches the first enum parameter and returns the matched enum value.
+ * @param field Match a specific field by name instead of defaulting to the first one.
  */
 @Target(AnnotationTarget.CLASS)
-public annotation class FromValue
+public annotation class FromValue(val field: String = "")
