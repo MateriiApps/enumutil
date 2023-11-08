@@ -31,8 +31,8 @@ kotlin {
 
 ### @FromValue
 
-Generate a `fromValue(...)` extension method for the target class.
-This matches the first enum parameter and returns the matched enum value.
+Generate `fromValue(...)` extension methods for the target class.
+This matches the first enum parameter unless the field name is specified explicitly. 
 
 ```kt
 @FromValue
@@ -42,9 +42,8 @@ enum class OpCodes(val code: Int) {
     CREATE(3),
     DISCONNECT(4);
 
-    companion object Serializer {
-        // blah blah blah
-    }
+    // This is needed in order to have static extensions
+    companion object
 }
 
 fun main() {

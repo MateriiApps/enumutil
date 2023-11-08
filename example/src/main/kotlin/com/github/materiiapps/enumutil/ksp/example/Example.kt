@@ -9,14 +9,13 @@ enum class OpCodes(val code: Int, val display: String) {
     CREATE(3, "Create"),
     DISCONNECT(4, "Disconnect");
 
-    companion object Serializer {
-        // blah blah blah
-    }
+    // This is needed in order to have static extensions
+    companion object
 }
 
 fun main() {
     val codes = (1..4).toList()
-        .map { OpCodes.fromValue(it) }
+        .map { OpCodes.fromValue(it)?.let { op -> op.display to op.code } }
 
     println(codes)
 }
