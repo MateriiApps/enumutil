@@ -16,4 +16,3 @@ rootProject.name = "enumutil-kt"
 include("enumutil")
 include("enumutil-ksp")
 include("example")
-//include("benchmark")

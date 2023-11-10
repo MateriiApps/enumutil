@@ -14,8 +14,8 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.materiiapps:enumutil:1.1.0")
-    ksp("io.github.materiiapps:enumutil-ksp:1.1.0")
+    implementation("io.github.materiiapps:enumutil:1.1.1")
+    ksp("io.github.materiiapps:enumutil-ksp:1.1.1")
 }
 
 kotlin {
