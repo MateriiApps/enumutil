@@ -1,15 +1,16 @@
 package com.github.materiiapps.enumutil.ksp
 
+import com.google.devtools.ksp.getDeclaredProperties
+import com.google.devtools.ksp.getVisibility
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
 import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.symbol.ClassKind
-import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.symbol.KSValueParameter
-import com.google.devtools.ksp.symbol.KSVisitorVoid
+import com.google.devtools.ksp.symbol.*
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ksp.toClassName
+import com.squareup.kotlinpoet.ksp.toKModifier
 import com.squareup.kotlinpoet.ksp.toTypeName
 import com.squareup.kotlinpoet.ksp.writeTo
 
@@ -20,6 +21,12 @@ class FromValueVisitor(
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
         if (classDeclaration.classKind != ClassKind.ENUM_CLASS) {
             logger.error("Cannot apply FromValue onto a non enum class!", classDeclaration)
+            return
+        }
+
+        // Check that target class isn't private
+        if (classDeclaration.getVisibility() == Visibility.PRIVATE) {
+            logger.error("FromValue: class must not be private", classDeclaration)
             return
         }
 
@@ -57,6 +64,16 @@ class FromValueVisitor(
             param
         }
 
+        // Check that the target param is not private
+        if (classDeclaration.getDeclaredProperties()
+                .find { it.simpleName.asString() == targetFieldName }!!
+                .getVisibility() == Visibility.PRIVATE
+        ) {
+            logger.error("FromValue: target field cannot be private!", classDeclaration)
+            return
+        }
+
+        // Get all enum entries
         val enumFields = classDeclaration.declarations
             .filter { (it as? KSClassDeclaration)?.classKind == ClassKind.ENUM_ENTRY }
             .map { it as KSClassDeclaration }
@@ -106,6 +123,7 @@ class FromValueVisitor(
         val parentClassName = parentClass.toClassName()
 
         return FunSpec.builder("fromValue")
+            .addModifiers(parentClass.getVisibility().toKModifier() ?: KModifier.PUBLIC)
             .receiver(companion.toClassName())
             .returns(parentClassName.copy(nullable = true))
             .addParameter("param", param.type.toTypeName())
